@@ -6,7 +6,7 @@ void returnContent(FILE* f, int flags[5]);
 int main() {
 	// 5 flags [ number-nonblanck, end-point, number, squeeze-blank, tab-point ]
 	int flags[5] = {0, 0 ,0 ,0 ,0};
-	FILE *f = readFile("Makefile");
+	FILE *f = readFile("test.txt");
 	if(f) {
 		returnContent(f, flags);
 	}
@@ -27,8 +27,8 @@ void returnContent(FILE* f, int flags[5]) {
 	int count_line = 1;
 	int count_nonline = 0;
 
-	char buff[256];
-	while ( fgets(buff, sizeof(buff), f) != NULL ) {
-		printf("%s", buff);
+	int ch;
+	while ( (ch = fgetc(f)) != EOF ) {
+		printf("%c", ch);
 	}
 }
