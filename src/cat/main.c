@@ -62,6 +62,11 @@ void returnContent(FILE* f, int flags[5]) {
 }
 
 void exitWithHelp() {
-	printf("./cat [OPTIONS] [FILE]\n");
+	printf("\n./cat [OPTIONS] [FILE]\n\n");
+	printf("\t-b --number-nonblanck\tnumbers only non-empty lines\n");
+	printf("\t-e -E\tdisplays $ at line ends\n");
+	printf("\t-n --number number all output lines\n");
+	printf("\t-s --squeeze-blank\tsqueeze multiple adjacent blank lines\n");
+	printf("\t-t -T\tbut also display tabs as ^I\n\n");
 	exit(1);
 }
