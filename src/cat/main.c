@@ -7,7 +7,9 @@ int main() {
 	// 5 flags [ number-nonblanck, end-point, number, squeeze-blank, tab-point ]
 	int flags[5] = {0, 0 ,0 ,0 ,0};
 	FILE *f = readFile("Makefile");
-	returnContent(f, flags);
+	if(f) {
+		returnContent(f, flags);
+	}
 	return 0;
 }
 
