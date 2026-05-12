@@ -1,19 +1,21 @@
 #include <stdio.h>
 
-int readFile(char* file);
+FILE* readFile(char* file);
 
-int main() {
-	readFile("Makefile");
+int main(int argc, char *argv[]) {
+	// 5 flags [ number-nonblanck, end-point, number, squeeze-blank, tab-point ]
+	int flags[5] = [0, 0 ,0 ,0 ,0];
+	FILE *f = readFile("Makefile");
 	return 0;
 }
 
-int readFile(char* file_name) {
+FILE* readFile(char* file_name) {
 	FILE *f = fopen(file_name, "r");
 	if (!f) {
 		printf("cat: %s: cannot open\n", file_name);
-		return -1;
+		return NULL;
 	}
-	printf("SUCCESS");
-	return 1;
+	
+	return f;
 }
 	
