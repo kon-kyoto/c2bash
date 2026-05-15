@@ -3,15 +3,25 @@
 #include <stdlib.h>
 
 FILE* readFile(char* file);
-void returnContent(FILE* f, int flags[5]);
+FILE* arg2flags(int argc, char* argv[], char flags[], FILE* f);
+void returnContent(FILE* f, char flags[5]);
 void exitWithHelp();
 
 int main(int argc, char* argv[]) {
 	// 5 flags [ number-nonblanck, end-point, number, squeeze-blank, tab-point ]
-	int flags[5] = {0};
+	char flags[5] = {0};
 	FILE* f = NULL;
 	
-	if ( argc < 2 || (argc >= 2 && strcmp(argv[1], "--help") ) == 0) {
+	f = arg2flags(argc, argv, flags, f);
+
+	if(f) {
+		returnContent(f, flags);
+	}
+	return 0;
+}
+
+FILE* arg2flags(int argc, char* argv[], char flags[], FILE* f) {
+	if ( argc < 2 || (argc >= 2 && strcmp(argv[1], "--help")  == 0) ) {
 		exitWithHelp();
 	}
 
@@ -35,10 +45,7 @@ int main(int argc, char* argv[]) {
 			exitWithHelp();
 	}
 
-	if(f) {
-		returnContent(f, flags);
-	}
-	return 0;
+	return f;
 }
 
 FILE* readFile(char* file_name) {
@@ -51,7 +58,7 @@ FILE* readFile(char* file_name) {
 	return f;
 }
 	
-void returnContent(FILE* f, int flags[5]) {
+void returnContent(FILE* f, char flags[5]) {
 	int count_line = 1;
 	int count_nonline = 0;
 
