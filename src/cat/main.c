@@ -20,6 +20,23 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
+void returnContent(FILE* f, char flags[5]) {
+	int count_line = 1;      // counter of line
+	int count_nonline = 1;   // counter of line withot content
+
+	int ch;
+	while ( (ch = fgetc(f)) != EOF ) {
+		if (flags[2] == 1 && count_nonline >= 1) {
+			printf("%d ", count_line++);
+		}
+		if ( ch == '\n' )
+			count_nonline++;
+		else
+			count_nonline = 0;
+		printf("%c", ch);
+	}
+}
+
 FILE* arg2flags(int argc, char* argv[], char flags[], FILE* f) {
 	if ( argc < 2 || (argc >= 2 && strcmp(argv[1], "--help")  == 0) ) {
 		exitWithHelp();
@@ -58,15 +75,6 @@ FILE* readFile(char* file_name) {
 	return f;
 }
 	
-void returnContent(FILE* f, char flags[5]) {
-	int count_line = 1;
-	int count_nonline = 0;
-
-	int ch;
-	while ( (ch = fgetc(f)) != EOF ) {
-		printf("%c", ch);
-	}
-}
 
 void exitWithHelp() {
 	printf("\n./cat [OPTIONS] [FILE]\n\n");
