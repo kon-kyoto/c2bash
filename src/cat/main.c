@@ -22,7 +22,6 @@ int main(int argc, char* argv[]) {
 
 void returnContent(FILE* f, char flags[5]) {
 	char count_line = 1;      // counter of line
-	char count_ = 0;
 	char count_nonline = 1;   // counter of line withot content
 
 	int ch;
@@ -36,6 +35,8 @@ void returnContent(FILE* f, char flags[5]) {
 		}
 
 		if ( ch == '\n' ) {
+			if (flags[1]) 
+				printf("$");
 			count_nonline++;
 		} else
 			count_nonline = 0;
