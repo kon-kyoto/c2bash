@@ -1,4 +1,4 @@
-#include "cat.h"
+#include "cat/cat.h"
 
 int main(int argc, char* argv[]) {
 	char flags = 0;

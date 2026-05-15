@@ -1,4 +1,4 @@
-#ifdef CAT_H
+#ifndef CAT_H
 #define CAT_H
 
 #include <stdio.h>
