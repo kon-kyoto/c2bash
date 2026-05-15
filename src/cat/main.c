@@ -21,18 +21,21 @@ int main(int argc, char* argv[]) {
 }
 
 void returnContent(FILE* f, char flags[5]) {
-	int count_line = 1;      // counter of line
-	int count_nonline = 1;   // counter of line withot content
+	char count_line = 1;      // counter of line
+	char count_ = 0;
+	char count_nonline = 1;   // counter of line withot content
 
 	int ch;
+	
 	while ( (ch = fgetc(f)) != EOF ) {
-		if (flags[2] == 1 && count_nonline >= 1) {
+		if (count_nonline >= 1 && (flags[2] || (flags[0] && ch != '\n'))) {
 			printf("%d ", count_line++);
 		}
 		if ( ch == '\n' )
 			count_nonline++;
 		else
 			count_nonline = 0;
+
 		printf("%c", ch);
 	}
 }
