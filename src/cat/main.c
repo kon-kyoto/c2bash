@@ -41,6 +41,11 @@ void returnContent(FILE* f, char flags[5]) {
 		} else
 			count_nonline = 0;
 
+		if (flags[4] && ch == '\t') {
+			printf("^|");
+			continue;
+		}
+
 		printf("%c", ch);
 	}
 }
