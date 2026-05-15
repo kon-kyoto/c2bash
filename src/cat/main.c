@@ -28,12 +28,16 @@ void returnContent(FILE* f, char flags[5]) {
 	int ch;
 	
 	while ( (ch = fgetc(f)) != EOF ) {
+		if (flags[3] && count_nonline > 1 && ch == '\n')
+			continue;
+		
 		if (count_nonline >= 1 && (flags[2] || (flags[0] && ch != '\n'))) {
 			printf("%d ", count_line++);
 		}
-		if ( ch == '\n' )
+
+		if ( ch == '\n' ) {
 			count_nonline++;
-		else
+		} else
 			count_nonline = 0;
 
 		printf("%c", ch);
