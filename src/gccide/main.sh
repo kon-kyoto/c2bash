@@ -1,25 +1,58 @@
 #!/bin/bash
 
-log_c_file="/tmp/gcclog$(date +%s%3N).c"
-log_file="/tmp/gcclog$(date +%s%3N)"
+log_c_file="/tmp/gcclog$$.c"
+log_file="/tmp/gcclog$$"
 
-# Проверяем существование файла (с кавычками!)
-if [ -f "$log_c_file" ]; then
-    # Если существует - добавляем суффикс
-    log_c_file="/tmp/gcclog$(date +%s%3N)_$$.c"
-    log_file="/tmp/gcclog$(date +%s%3N)_$$"
-fi
-
-# Создаем C файл
-echo "#include <stdio.h>
+new_code() {
+cat > "$log_c_file" << 'EOF'
+#include <stdio.h>
 
 int main() {
-    // $log_file
     
     return 0;
-}" > "$log_c_file"
+}
+EOF
+}
 
-# Компилируем
-gcc "$log_c_file" -o "$log_file"
+add_line() {
+	local line=$(echo "$1" | sed 's/[\/&]/\\&/g')
+	sed -i "/return 0;/i\\    $line" "$log_c_file"
+}
 
-echo "Создан: $log_c_file -> $log_file"
+show_code() {
+	cat "$log_c_file"
+}
+
+new_code
+
+while true; do
+    echo -n ">>> "
+    read new_line
+
+    case "$new_line" in
+	quit|exit)
+		break
+		;;
+	run)
+		echo "Start running..."
+		if gcc "$log_c_file" -o "$log_file" 2>&1; then
+			"$log_file"
+		else
+			echo "ERROR!"
+		fi
+		;;
+	show)
+		show_code
+		;;
+	clear)
+		new_code
+		;;
+	*)
+		if [ -n "$new_line" ]; then
+			add_line "$new_line"
+		fi
+		;;
+	esac
+done
+
+rm -f "$log_c_file" "$log_file"
