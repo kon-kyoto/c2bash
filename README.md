@@ -40,7 +40,7 @@ If no file is specified, reads from stdin.
 # Combine multiple flags
 ./cat -b -T test.txt
 
-# Read from stdin (need fix becase dont work without flags)
+# Read from stdin
 echo "hello" | ./cat -E
 ```
 
