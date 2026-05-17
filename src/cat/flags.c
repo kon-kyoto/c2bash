@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 FILE* parse_flags(int argc, char* argv[], char* flags, FILE* f) {
-    if (argc < 2 || (argc >= 2 && strcmp(argv[1], "--help") == 0)) {
+    if (argc < 1 || (argc >= 2 && strcmp(argv[1], "--help") == 0)) {
         print_help();
     }
     
