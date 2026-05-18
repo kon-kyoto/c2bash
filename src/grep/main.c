@@ -2,7 +2,7 @@
 # include <stdlib.h>
 
 void print_help();
-// void find_word(char* find, int len_ford, char* line, int len_line);
+char find_word(unsigned int len_line, unsigned int len_find, char line[], char find[]);
 
 int main(int argc, char* argv[]) {
 	char ch;
@@ -13,9 +13,9 @@ int main(int argc, char* argv[]) {
 	} else 
 		print_help();
 
-	unsigned int count = 0;
-	while (find[count] != '\0') {
-		count++;
+	unsigned int len_find = 0;
+	while (find[len_find] != '\0') {
+		len_find++;
 	}
 
 	unsigned int len_line = 0;
@@ -23,21 +23,11 @@ int main(int argc, char* argv[]) {
 	char line[buff];
 
 	while ((ch = fgetc(f)) != EOF) {
-		if (ch == '\n' && len_line >= count) {
-			char isFound = 0;
-			for (unsigned int i = 0; i < len_line; i++) {
-				if (line[i] == find[0]) {
-					for (unsigned int j = 0; j < count; j++) {
-						if (line[i+j] != find[j]) {
-							break;
-						} else if (j == count-1){
-							printf("%s\n", line);
-							isFound = 1;
-						}
-					}
-					if (isFound == 1)
-						break;
-				}
+		if (ch == '\n' && len_line >= len_find) {
+			char isFound = find_word(len_line, len_find, line, find);
+			if (isFound == 1) {
+				line[len_line] = '\0';
+				printf("%s\n", line);
 			}
 			len_line = 0;
 		} else if (ch == '\n') {
@@ -54,6 +44,25 @@ int main(int argc, char* argv[]) {
 	}
 
 	return 0;
+}
+
+char find_word(unsigned int len_line, unsigned int len_find, char line[], char find[]) {
+	char isFound = 0;
+	for (unsigned int i = 0; i < len_line; i++) {
+		if (line[i] == find[0]) {
+			for (unsigned int j = 0; j < len_find; j++) {
+				if (line[i+j] != find[j]) {
+					break;
+				} else if (j == len_find-1){
+					isFound = 1;
+				}
+			}
+			if (isFound == 1)
+				break;
+		}
+	}
+
+	return isFound;
 }
 
 void print_help() {
