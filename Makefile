@@ -21,4 +21,4 @@ grep:
 	$(CC) $(CFLAGS) $(SOURCES_GREP) -o grep
 
 clean:
-	rm -f cat gccide
+	rm -f cat gccide grep
